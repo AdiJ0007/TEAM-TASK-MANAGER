@@ -12,4 +12,17 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('react-hot-toast')) return 'vendor-toast';
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'vendor-react';
+          if (id.includes('react-router-dom')) return 'vendor-router';
+          if (id.includes('@reduxjs') || id.includes('react-redux')) return 'vendor-redux';
+        },
+      },
+    },
+  },
 })
