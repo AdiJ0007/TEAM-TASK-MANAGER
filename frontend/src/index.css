@@ -1,0 +1,294 @@
+/* ============================================================
+   TASKFLOW — Design System Stylesheet
+   Dark Theme | Neon Borders | Varied Fonts
+   ============================================================ */
+
+/* Google Fonts — 5 font families for different UI elements */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ── Forced Dark Theme ── */
+  :root {
+    --bg-main: 6 6 14;           /* #06060E — near-black with blue tint */
+    --bg-surface: 13 13 28;      /* #0D0D1C — dark navy */
+    --text-main: 236 238 255;    /* near-white with slight blue */
+    --text-muted: 100 108 145;   /* muted indigo-grey */
+
+    /* Neon glow colors */
+    --glow-purple: 99 102 241;
+    --glow-cyan: 6 182 212;
+    --glow-pink: 236 72 153;
+    --glow-green: 74 222 128;
+    --glow-orange: 251 146 60;
+  }
+
+  /* Force dark mode always — add 'dark' class to html element */
+  /* Dark mode is applied via the darkMode: 'class' config + JS in main.jsx */
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: rgb(var(--bg-main));
+    color: rgb(var(--text-main));
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* Input & Select dark styling */
+  input, textarea, select {
+    color-scheme: dark;
+  }
+
+  /* ── Date input color fix ── */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.5);
+  }
+}
+
+@layer components {
+  /* ── Glass Cards ── */
+  .glass {
+    background: rgba(13, 13, 28, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Neon-bordered card variants */
+  .card-neon-purple {
+    @apply glass rounded-2xl;
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card-neon-purple:hover {
+    border-color: rgba(99, 102, 241, 0.7);
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.25), 0 0 60px rgba(99, 102, 241, 0.08);
+  }
+
+  .card-neon-cyan {
+    @apply glass rounded-2xl;
+    border: 1px solid rgba(6, 182, 212, 0.35);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card-neon-cyan:hover {
+    border-color: rgba(6, 182, 212, 0.7);
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.25), 0 0 60px rgba(6, 182, 212, 0.08);
+  }
+
+  .card-neon-pink {
+    @apply glass rounded-2xl;
+    border: 1px solid rgba(236, 72, 153, 0.35);
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card-neon-pink:hover {
+    border-color: rgba(236, 72, 153, 0.7);
+    box-shadow: 0 0 25px rgba(236, 72, 153, 0.25), 0 0 60px rgba(236, 72, 153, 0.08);
+  }
+
+  .card-neon-green {
+    @apply glass rounded-2xl;
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card-neon-green:hover {
+    border-color: rgba(74, 222, 128, 0.7);
+    box-shadow: 0 0 25px rgba(74, 222, 128, 0.25), 0 0 60px rgba(74, 222, 128, 0.08);
+  }
+
+  /* ── Gradient Text ── */
+  .text-gradient {
+    background: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-pink {
+    background: linear-gradient(135deg, #ec4899, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Neon Buttons ── */
+  .btn-neon {
+    @apply relative font-badge font-semibold tracking-wider px-6 py-3 rounded-xl transition-all duration-300;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: 1px solid rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3), 0 4px 15px rgba(0,0,0,0.3);
+    color: white;
+  }
+  .btn-neon:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.6), 0 8px 25px rgba(0,0,0,0.4);
+    border-color: rgba(99, 102, 241, 0.8);
+  }
+  .btn-neon:active { transform: translateY(0); }
+
+  .btn-neon-cyan {
+    @apply relative font-badge font-semibold tracking-wider px-6 py-3 rounded-xl transition-all duration-300;
+    background: linear-gradient(135deg, #0891b2, #06b6d4);
+    border: 1px solid rgba(6, 182, 212, 0.5);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.3), 0 4px 15px rgba(0,0,0,0.3);
+    color: white;
+  }
+  .btn-neon-cyan:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.6), 0 8px 25px rgba(0,0,0,0.4);
+  }
+
+  /* ── Neon Input Fields ── */
+  .input-neon {
+    @apply w-full rounded-xl px-4 py-3 text-sm transition-all duration-300 outline-none;
+    background: rgba(6, 6, 14, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgb(236, 238, 255);
+  }
+  .input-neon:focus {
+    border-color: rgba(99, 102, 241, 0.7);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 0 15px rgba(99, 102, 241, 0.1);
+  }
+  .input-neon::placeholder { color: rgba(100, 108, 145, 0.7); }
+
+  /* ── Priority Badges ── */
+  .badge-high {
+    @apply font-badge font-semibold tracking-wide text-xs px-2.5 py-1 rounded-lg;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+  }
+  .badge-medium {
+    @apply font-badge font-semibold tracking-wide text-xs px-2.5 py-1 rounded-lg;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fde68a;
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+  }
+  .badge-low {
+    @apply font-badge font-semibold tracking-wide text-xs px-2.5 py-1 rounded-lg;
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    color: #86efac;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+  }
+
+  /* ── Status Badges ── */
+  .status-todo {
+    @apply font-badge font-semibold tracking-wide text-xs px-2.5 py-1 rounded-lg;
+    background: rgba(100, 108, 145, 0.15);
+    border: 1px solid rgba(100, 108, 145, 0.4);
+    color: rgb(var(--text-muted));
+  }
+  .status-progress {
+    @apply font-badge font-semibold tracking-wide text-xs px-2.5 py-1 rounded-lg;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    color: #a5b4fc;
+    text-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+  }
+  .status-review {
+    @apply font-badge font-semibold tracking-wide text-xs px-2.5 py-1 rounded-lg;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    color: #67e8f9;
+    text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+  }
+  .status-done {
+    @apply font-badge font-semibold tracking-wide text-xs px-2.5 py-1 rounded-lg;
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    color: #86efac;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+  }
+
+  /* ── Kanban Column ── */
+  .kanban-col-todo { border-top: 2px solid rgba(100, 108, 145, 0.5); }
+  .kanban-col-progress { border-top: 2px solid rgba(99, 102, 241, 0.7); box-shadow: 0 -2px 10px rgba(99, 102, 241, 0.2); }
+  .kanban-col-review { border-top: 2px solid rgba(6, 182, 212, 0.7); box-shadow: 0 -2px 10px rgba(6, 182, 212, 0.2); }
+  .kanban-col-done { border-top: 2px solid rgba(74, 222, 128, 0.7); box-shadow: 0 -2px 10px rgba(74, 222, 128, 0.2); }
+
+  /* ── Stat Card Borders ── */
+  .stat-projects {
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(6, 6, 14, 0.6));
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.08);
+  }
+  .stat-done {
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.08), rgba(6, 6, 14, 0.6));
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.08);
+  }
+  .stat-progress {
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(6, 6, 14, 0.6));
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.08);
+  }
+  .stat-overdue {
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(6, 6, 14, 0.6));
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.08);
+  }
+}
+
+@layer utilities {
+  /* ── Scrollbar Styles ── */
+  .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 10px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.6); }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* ── Neon border utility ── */
+  .border-neon-purple { border-color: rgba(99, 102, 241, 0.5); }
+  .border-neon-cyan { border-color: rgba(6, 182, 212, 0.5); }
+  .border-neon-pink { border-color: rgba(236, 72, 153, 0.5); }
+  .border-neon-green { border-color: rgba(74, 222, 128, 0.5); }
+
+  /* ── Glow text utilities ── */
+  .glow-purple { text-shadow: 0 0 10px rgba(99, 102, 241, 0.8), 0 0 20px rgba(99, 102, 241, 0.4); }
+  .glow-cyan { text-shadow: 0 0 10px rgba(6, 182, 212, 0.8), 0 0 20px rgba(6, 182, 212, 0.4); }
+  .glow-green { text-shadow: 0 0 10px rgba(74, 222, 128, 0.8), 0 0 20px rgba(74, 222, 128, 0.4); }
+
+  /* ── Animated gradient background ── */
+  .bg-gradient-animated {
+    background: linear-gradient(270deg, #6366f1, #a855f7, #06b6d4, #8b5cf6);
+    background-size: 300% 300%;
+    animation: gradient-x 6s ease infinite;
+  }
+
+  /* ── Grid pattern overlay ── */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* ── Font utilities ── */
+  .font-brand { font-family: 'Orbitron', system-ui, sans-serif; }
+  .font-heading { font-family: 'Space Grotesk', system-ui, sans-serif; }
+  .font-badge { font-family: 'Rajdhani', system-ui, sans-serif; }
+  .font-display { font-family: 'Syne', system-ui, sans-serif; }
+}
+
+/* ── Responsive tweaks ── */
+@media (max-width: 640px) {
+  .glass { backdrop-filter: blur(8px); }
+}

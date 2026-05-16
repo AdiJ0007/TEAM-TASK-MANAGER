@@ -1,0 +1,39 @@
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Build artifacts (will be built in container)
+frontend/dist
+frontend/.vite
+
+# Development tools
+.git
+.gitignore
+.github
+*.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Test files
+*.test.js
+*.spec.js
+__tests__/
+coverage/
+
+# Scratch files
+scratch/
+*.scratch.js
