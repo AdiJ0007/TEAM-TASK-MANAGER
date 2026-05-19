@@ -15,9 +15,15 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const app = express();
 
 // Allow all origins in development; lock down in production via env var
+const allowedOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(',')
+  : true; // true = reflect any origin (safe for public APIs)
+
 const corsOptions = {
-  origin: process.env.CLIENT_URL || '*',
+  origin: allowedOrigins,
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(cors(corsOptions));
 app.use(express.json());
