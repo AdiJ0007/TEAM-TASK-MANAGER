@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, googleLogin, getMe } from '../store/authSlice';
+import { API_BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { FiMail, FiLock, FiZap, FiArrowRight } from 'react-icons/fi';
 
 const Login = () => {
-  const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { isLoading } = useSelector((state) => state.auth);
@@ -124,7 +123,7 @@ const Login = () => {
 
           {/* Google OAuth */}
           <a
-            href={`${API_URL}/auth/google`}
+            href={`${API_BASE_URL}/auth/google`}
             className="flex items-center justify-center gap-3 w-full py-3 rounded-xl font-badge font-semibold tracking-wide text-sm text-white transition-all duration-300"
             style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
             onMouseEnter={e => { e.currentTarget.style.border = '1px solid rgba(99,102,241,0.4)'; e.currentTarget.style.background = 'rgba(99,102,241,0.08)'; }}

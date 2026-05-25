@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { API_BASE_URL } from '../utils/api';
 import { motion } from 'framer-motion';
 import { FiUser, FiMail, FiShield, FiTrash2 } from 'react-icons/fi';
-
-const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
 
 const Team = () => {
   const [team, setTeam] = useState([]);
@@ -16,7 +15,7 @@ const Team = () => {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const res = await axios.get(`${API_URL}/users`, {
+        const res = await axios.get(`${API_BASE_URL}/users`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setTeam(res.data);

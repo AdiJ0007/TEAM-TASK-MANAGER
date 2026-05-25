@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../utils/api';
 
-const API_URL = '/api/notifications';
+const API_URL = `${API_BASE_URL}/notifications`;
 
 export const fetchNotifications = createAsyncThunk(
   'notifications/fetchAll',

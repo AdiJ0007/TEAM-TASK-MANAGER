@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
-const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
+import { API_BASE_URL } from '../utils/api';
 
 const useProjectStore = create((set, get) => ({
   projects: [],
@@ -13,7 +12,7 @@ const useProjectStore = create((set, get) => ({
   fetchProjects: async (token) => {
     set({ isLoading: true });
     try {
-      const res = await axios.get(`${API_URL}/projects`, {
+      const res = await axios.get(`${API_BASE_URL}/projects`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ projects: res.data, isLoading: false });
@@ -26,10 +25,10 @@ const useProjectStore = create((set, get) => ({
   fetchProjectDetails: async (projectId, token) => {
     set({ isLoading: true });
     try {
-      const res = await axios.get(`${API_URL}/projects/${projectId}`, {
+      const res = await axios.get(`${API_BASE_URL}/projects/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      const tasksRes = await axios.get(`${API_URL}/tasks/project/${projectId}`, {
+      const tasksRes = await axios.get(`${API_BASE_URL}/tasks/project/${projectId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ currentProject: res.data, tasks: tasksRes.data, isLoading: false });
@@ -41,7 +40,7 @@ const useProjectStore = create((set, get) => ({
 
   createProject: async (projectData, token) => {
     try {
-      const res = await axios.post(`${API_URL}/projects`, projectData, {
+      const res = await axios.post(`${API_BASE_URL}/projects`, projectData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({ projects: [...state.projects, res.data] }));
@@ -55,7 +54,7 @@ const useProjectStore = create((set, get) => ({
 
   createTask: async (taskData, token) => {
     try {
-      const res = await axios.post(`${API_URL}/tasks`, taskData, {
+      const res = await axios.post(`${API_BASE_URL}/tasks`, taskData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({ tasks: [...state.tasks, res.data] }));
@@ -69,7 +68,7 @@ const useProjectStore = create((set, get) => ({
 
   updateTaskStatus: async (taskId, status, token) => {
     try {
-      const res = await axios.put(`${API_URL}/tasks/${taskId}`, { status }, {
+      const res = await axios.put(`${API_BASE_URL}/tasks/${taskId}`, { status }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set((state) => ({

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { API_BASE_URL } from '../utils/api';
 import { 
   FiCheckCircle as CheckCircle2, FiClock as Clock, FiAlertCircle as AlertCircle, FiCalendar as Calendar, 
   FiFilter as Filter, FiMoreVertical as MoreVertical, FiTarget as Target, FiList as ListTodo
@@ -34,11 +35,7 @@ const MemberProgressTracker = () => {
   useEffect(() => {
     const fetchProgress = async () => {
       try {
-        const baseUrl = import.meta.env.PROD 
-          ? '/api' 
-          : 'http://localhost:5000/api';
-          
-        const res = await axios.get(`${baseUrl}/projects/${projectId}/member/${memberId}/progress`, {
+        const res = await axios.get(`${API_BASE_URL}/projects/${projectId}/member/${memberId}/progress`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         

@@ -1,13 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
-const API_URL = '/api';
+import { API_BASE_URL } from '../utils/api';
 
 export const fetchProjects = createAsyncThunk('project/fetchProjects', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.get(`${API_URL}/projects`, {
+    const res = await axios.get(`${API_BASE_URL}/projects`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return res.data;
@@ -20,7 +19,7 @@ export const fetchProjects = createAsyncThunk('project/fetchProjects', async (_,
 export const fetchDashboardStats = createAsyncThunk('project/fetchStats', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.get(`${API_URL}/dashboard/stats`, {
+    const res = await axios.get(`${API_BASE_URL}/dashboard/stats`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return res.data;
@@ -32,10 +31,10 @@ export const fetchDashboardStats = createAsyncThunk('project/fetchStats', async 
 export const fetchProjectDetails = createAsyncThunk('project/fetchDetails', async (projectId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const projectRes = await axios.get(`${API_URL}/projects/${projectId}`, {
+    const projectRes = await axios.get(`${API_BASE_URL}/projects/${projectId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
-    const tasksRes = await axios.get(`${API_URL}/tasks/project/${projectId}`, {
+    const tasksRes = await axios.get(`${API_BASE_URL}/tasks/project/${projectId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return { project: projectRes.data, tasks: tasksRes.data };
@@ -48,7 +47,7 @@ export const fetchProjectDetails = createAsyncThunk('project/fetchDetails', asyn
 export const createProject = createAsyncThunk('project/create', async (projectData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.post(`${API_URL}/projects`, projectData, {
+    const res = await axios.post(`${API_BASE_URL}/projects`, projectData, {
       headers: { Authorization: `Bearer ${token}` }
     });
     toast.success('Project created');
@@ -62,7 +61,7 @@ export const createProject = createAsyncThunk('project/create', async (projectDa
 export const createTask = createAsyncThunk('project/createTask', async (taskData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.post(`${API_URL}/tasks`, taskData, {
+    const res = await axios.post(`${API_BASE_URL}/tasks`, taskData, {
       headers: { Authorization: `Bearer ${token}` }
     });
     toast.success('Task created');
@@ -76,7 +75,7 @@ export const createTask = createAsyncThunk('project/createTask', async (taskData
 export const updateTaskStatus = createAsyncThunk('project/updateTaskStatus', async ({ taskId, ...updateData }, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.put(`${API_URL}/tasks/${taskId}`, updateData, {
+    const res = await axios.put(`${API_BASE_URL}/tasks/${taskId}`, updateData, {
       headers: { Authorization: `Bearer ${token}` }
     });
     toast.success('Task updated successfully!');
@@ -91,7 +90,7 @@ export const updateTaskStatus = createAsyncThunk('project/updateTaskStatus', asy
 export const addMemberToProject = createAsyncThunk('project/addMember', async ({ projectId, email }, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.post(`${API_URL}/projects/${projectId}/members`, { email }, {
+    const res = await axios.post(`${API_BASE_URL}/projects/${projectId}/members`, { email }, {
       headers: { Authorization: `Bearer ${token}` }
     });
     toast.success('Member added successfully');
@@ -105,7 +104,7 @@ export const addMemberToProject = createAsyncThunk('project/addMember', async ({
 export const deleteProject = createAsyncThunk('project/delete', async (projectId, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    await axios.delete(`${API_URL}/projects/${projectId}`, {
+    await axios.delete(`${API_BASE_URL}/projects/${projectId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     toast.success('Project deleted');
@@ -119,7 +118,7 @@ export const deleteProject = createAsyncThunk('project/delete', async (projectId
 export const addTaskComment = createAsyncThunk('project/addComment', async ({ taskId, text }, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.post(`${API_URL}/tasks/${taskId}/comments`, { text }, {
+    const res = await axios.post(`${API_BASE_URL}/tasks/${taskId}/comments`, { text }, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return res.data; // Returns updated task

@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
-const API_URL = '/api';
+import { API_BASE_URL } from '../utils/api';
 
 export const loginUser = createAsyncThunk('auth/login', async ({ email, password }, thunkAPI) => {
   try {
-    const res = await axios.post(`${API_URL}/auth/login`, { email, password });
+    const res = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data));
     toast.success('Logged in successfully!');
@@ -20,7 +19,7 @@ export const loginUser = createAsyncThunk('auth/login', async ({ email, password
 
 export const signupUser = createAsyncThunk('auth/signup', async ({ name, email, password, role, adminCode }, thunkAPI) => {
   try {
-    const res = await axios.post(`${API_URL}/auth/signup`, { name, email, password, role, adminCode });
+    const res = await axios.post(`${API_BASE_URL}/auth/signup`, { name, email, password, role, adminCode });
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data));
     toast.success('Account created successfully!');
@@ -35,7 +34,7 @@ export const signupUser = createAsyncThunk('auth/signup', async ({ name, email, 
 export const updateProfile = createAsyncThunk('auth/updateProfile', async (userData, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.put(`${API_URL}/users/profile`, userData, {
+    const res = await axios.put(`${API_BASE_URL}/users/profile`, userData, {
       headers: { Authorization: `Bearer ${token}` }
     });
     localStorage.setItem('user', JSON.stringify(res.data));
@@ -50,7 +49,7 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (userD
 export const upgradeAccount = createAsyncThunk('auth/upgrade', async (adminCode, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.post(`${API_URL}/auth/upgrade`, { adminCode }, {
+    const res = await axios.post(`${API_BASE_URL}/auth/upgrade`, { adminCode }, {
       headers: { Authorization: `Bearer ${token}` }
     });
     localStorage.setItem('user', JSON.stringify(res.data));
@@ -66,7 +65,7 @@ export const upgradeAccount = createAsyncThunk('auth/upgrade', async (adminCode,
 export const deleteAccount = createAsyncThunk('auth/deleteAccount', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.delete(`${API_URL}/auth/me`, {
+    const res = await axios.delete(`${API_BASE_URL}/auth/me`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     localStorage.removeItem('token');
@@ -83,7 +82,7 @@ export const deleteAccount = createAsyncThunk('auth/deleteAccount', async (_, th
 export const getMe = createAsyncThunk('auth/getMe', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
-    const res = await axios.get(`${API_URL}/auth/me`, {
+    const res = await axios.get(`${API_BASE_URL}/auth/me`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     localStorage.setItem('user', JSON.stringify(res.data));

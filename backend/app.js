@@ -29,6 +29,42 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(passport.initialize());
 
+let connectPromise = null;
+const connectDB = async () => {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI is not configured');
+  }
+
+  if (!connectPromise) {
+    connectPromise = mongoose
+      .connect(process.env.MONGO_URI)
+      .then(() => {
+        console.log('Connected to MongoDB');
+        return mongoose.connection;
+      })
+      .catch((err) => {
+        connectPromise = null;
+        console.error('MongoDB connection error:', err);
+        throw err;
+      });
+  }
+
+  return connectPromise;
+};
+
+app.use('/api', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(503).json({ message: 'Database unavailable' });
+  }
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
@@ -67,20 +103,6 @@ if (
   });
 }
 
-// Connect to MongoDB (with caching for serverless environments)
-let isConnected = false;
-const connectDB = async () => {
-  if (isConnected && mongoose.connection.readyState === 1) return;
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    isConnected = true;
-    console.log('Connected to MongoDB');
-  } catch (err) {
-    console.error('MongoDB connection error:', err);
-  }
-};
-
-// Always try to connect (cached for serverless)
-connectDB();
+app.dbReady = connectDB();
 
 module.exports = app;
